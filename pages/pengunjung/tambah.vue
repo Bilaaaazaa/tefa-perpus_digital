@@ -2,21 +2,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="text-center my-4">ISI BUKU KUNJUNGAN</h2>
-                <form @submit.prevent="kirimdata">
+                <h2 class="text-center my-4">isi buku kunjungan</h2>
+                <form @submit.prevent="KirimData">
                     <div class="mb-3">
-                        <input v-model="form.nama" class="form-control form-control-lg rounded-5" type="text" placeholder="nama..."/>
+                        <input v-model="form.nama" class="form-control form-control-lg rounded-5 abu" type="text" placeholder="nama..."/>
                     </div>
                     <div class="mb-3">
-                        <select v-model="form.keanggotaan"  class="form-control form-control-lg form-select rounded-5">
+                        <select v-model="form.keanggotaan"  class="form-control form-control-lg form-select rounded-5 abu">
                             <option value="">keanggotaan</option>
                             <option v-for="(member, i) in members" :key="i" :value="member.id">{{ member.nama }}</option>
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div v-if="form.keanggotaan == 2" class="mb-3">
                         <div class="row">
                             <div class="col-md-4">
-                                <select v-model="form.tingkat" class="form-control form-control-lg form-select rounded-5 mb-2">
+                                <select v-model="form.tingkat" class="form-control form-control-lg form-select rounded-5 mb-2 abu">
                                     <option value="">tingkat</option>
                                     <option value="X">X</option>
                                     <option value="XI">XI</option>
@@ -24,7 +24,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select v-model="form.jurusan" class="form-control form-control-lg form-select rounded-5 mb-2">
+                                <select v-model="form.jurusan" class="form-control form-control-lg form-select rounded-5 mb-2 abu">
                                     <option value="">jurusan</option>
                                     <option value="PPLG">PPLG</option>
                                     <option value="TJKT">TJKT</option>
@@ -34,7 +34,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select v-model="form.kelas" class="form-control form-control-lg form-select rounded-5 mb-2">
+                                <select v-model="form.kelas" class="form-control form-control-lg form-select rounded-5 mb-2 abu">
                                     <option value="">kelas</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -45,12 +45,14 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <select v-model="form.keperluan" class="form-control form-control-lg form-select rounded-5 mb-2">
+                        <select v-model="form.keperluan" class="form-control form-control-lg form-select rounded-5 mb-2 abu">
                             <option value="">keperluan</option>
                             <option v-for="(item, i) in objectives" :key="i" :value="item.id">{{ item.nama }}</option>
                         </select>
                     </div>
-                        <button type="submit" class="btn btn-dark btn-lg rounded-5 px-5">kirim</button>
+                      
+                        <button type="submit" class="btn btn-dark btn-lg rounded-5 px-5 abu">kirim</button>
+
                 </form>
             </div>
         </div>
@@ -60,29 +62,30 @@
 const supabase = useSupabaseClient()
 
 const members = ref([]);
-const objective = ref([]);
+const objectives = ref([]);
 
 const form = ref({
     nama: "",
-    keanggotaan:"",
-    tingkat:"",
-    jurusan:"",
     kelas:"",
+    keanggotaan:"",
     keperluan:"",
+    jurusan:"",
 });
 
-const kirimdata = async () => {
-    const { error } = await supabase.form('Pengunjung').insert([form.value])
-    if(!error) navigateTo('/pengunjung')
+const KirimData = async () => {
+    console.log(form.value)
+    const { error } = await supabase.from("pengunjung").insert([form.value])
+    if(!error) navigateTo("/pengunjung")
+    else throw error
 };
 
 const getkeanggotaan = async () => {
-    const { data, error } = await supabase.form('keanggotaan').select('*')
+    const { data, error } = await supabase.from("keanggotaan").select("*")
     if(data) members.value = data
 };
 
 const getkeperluan = async () => {
-    const { data, error } = await supabase.form('keperluan').select('*')
+    const { data, error } = await supabase.from("keperluan").select("*")
     if(data) objectives.value = data
 };
 
@@ -91,3 +94,29 @@ onMounted(() => {
     getkeperluan();
 });
 </script>
+<style scoped>
+.btn{
+    background-color: aquamarine;
+}
+.nama{
+    background-color: bisque;
+}
+.keanggotaan{
+    background-color: azure;
+}
+.tingkat{
+    background-color: antiquewhite;
+}
+.jurusan{
+    background-color: aqua;
+}
+.kelas{
+    background-color: aqua;
+}
+.keperluan{
+    background-color: aqua;
+}
+.abu{
+    background-color: #D9D9D9;
+}
+</style>

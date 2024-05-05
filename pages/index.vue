@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
         <div class="row my-5">
-            <div class="col-lg-6">
-                <nuxt-link to="../pengunjung/tambah">
+            <div class="col-lg-6 box ">
+                <nuxt-link to="/pengunjung/tambah">
                     <div class="card bg-pengunjung rounded-5">
                         <div class="card-body">
                             <h2>Pengunjung</h2>
@@ -10,8 +10,8 @@
                     </div>
                 </nuxt-link>
             </div>
-            <div class="col-lg-6">
-              <nuxt-link to="../buku">
+            <div class="col-lg-6 box">
+              <nuxt-link to="/buku">
                     <div class="card bg-buku rounded-5">
                         <div class="card-body">
                             <h2>Cari Buku</h2>
@@ -33,45 +33,13 @@
       </div>
       <div class="col-5">
         <div class="raccing1">
-          <h2>33 Buku</h2>
+          <h2>30 Buku</h2>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import Chart from 'chart.js/auto';
-
-const labels = [
-  'january',
-  'febuari',
-  'maret',
-  'april',
-  'mei',
-];
-const data ={
-  labels:labels,
-  dataasets:[{
-    label: 'pengunjung',
-    backgroundColor:'rgb(255, 99, 132)',
-    borderColor:'rgb(255, 100, 132)',
-    data: [6, 8, 10, 9, 9,],
-  }]
-};
-const  config ={
-  type: 'bar',
-  data: data,
-  options: {}
-};
-onMounted(()=>{
-  const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
-})
-
-</script>
 
 <style scoped>
 .card {
@@ -79,13 +47,13 @@ onMounted(()=>{
     box-shadow: 1px 1px 10px #424242;
 }
 .card.bg-pengunjung {
-    background-image: url('../assets/img/bg-home-kunjungan.jpeg');
+    background-image: url('../assets/img/picture1.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
 }
 .card.bg-buku {
-    background: url('../assets/img/bg-home-cari-buku.jpg') no-repeat center center;
+    background: url('../assets/img/picture2.png') no-repeat center center;
     background-size: cover;
 }
 .raccing {
@@ -107,6 +75,12 @@ onMounted(()=>{
   background-color:   #B1EFA1;
 }
 .card-body h2{
-    color: white;
+    color: black;
+} 
+.box {
+  width: 50%;
+}
+.box a{
+  text-decoration: none;
 }
 </style>

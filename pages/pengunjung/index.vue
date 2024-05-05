@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <h2 class="text-center my-4">riwayat kunjungan</h2>
                 <div class="my-3">
-                    <input type="search" class="form-control rounded-5" placeholder="Fiter...">
+                    <input type="search" class="form-control rounded-5 abu" placeholder="Filter...">
                 </div>
                  <div class="my-3 text-muted">menampilkan 1 drat</div>
                  <table class="table">
@@ -40,11 +40,16 @@ const supabase = useSupabaseClient()
 const visitors = ref([])
 
 const getpengunjung = async () => {
-    const { data, error } = await supabase.form('pengunjung').select('*, keanggotaan(*), keperluan(*)')
+    const { data, error } = await supabase.from('pengunjung').select(`*, keanggotaan(*), keperluan(*)`)
     if(data) visitors.value = data
 }
 
 onMounted(() => {
     getpengunjung()
-})
+});
 </script>
+<style scoped>
+.abu{
+    background-color: #D9D9D9;
+}
+</style>
