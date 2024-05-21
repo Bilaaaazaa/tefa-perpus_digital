@@ -21,25 +21,62 @@
             </div>
         </div>
     </div>
-    <h2 style="margin: 30px"><strong>STATISTIK</strong></h2>
-  <div class="Container-fluid">
-    <div class="row justify-content-evenly rounded-3">
-      <div class="col-5">
-        <div class="card1">
-          <div class="raccing">
-            <h2>3 Pengunjung</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-5">
-        <div class="raccing1">
-          <h2>30 Buku</h2>
-        </div>
-      </div>
+    <div class="statistik">
+      <h1>STATISTIK</h1>
     </div>
-  </div>
+      <div class="row my-5 d-flex justify-content-evenly ">
+        <div class="col-lg-6 box">
+          <NuxtLink to="/pengunjung">
+            <div class="card raccing rounded-5">
+              <div class="card-body text">
+                <h3 class="pt-4"><span class="no">{{jmlh_pengunjung}}</span>Pengunjung</h3>
+              </div>
+            </div>
+          </NuxtLink>
+          </div>
+        <div class="col-lg-6 box">
+          <NuxtLink to="/buku">
+            <div class="card raccing1 rounded-5">
+              <div class="card-body text">
+                <h3 class="pt-4"><span class="no">{{jmlh_buku}}</span>Buku</h3>
+              </div>
+            </div>
+          </NuxtLink>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <Statistik />
+        </div>
+      </div>
 </template>
 
+<script setup>
+const supabase = useSupabaseClient()
+const jmlh_pengunjung = ref(0)
+const jmlh_buku = ref(0)
+
+async function getjmlh_pengunjung(){
+  const{error, data, count} = await supabase
+  .from("pengunjung")
+  .select('*', {count: 'exact'})
+  if (count) jmlh_pengunjung.value = count
+}
+
+async function getjmlh_buku(){
+  const{error, data, count} = await supabase
+  .from("Buku")
+  .select('*', {count: 'exact'})
+  if (count) jmlh_buku.value = count
+}
+
+onMounted(() => {
+  getjmlh_pengunjung()
+  getjmlh_buku()
+})
+
+useHead({ title: "Home / PERPUSTAKAAN DIGITAL" })
+</script>
 
 <style scoped>
 .card {
